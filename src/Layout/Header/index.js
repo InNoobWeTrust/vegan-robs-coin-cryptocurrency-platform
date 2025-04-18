@@ -10,6 +10,7 @@ import {
   Stack,
   useMediaQuery,
 } from "@mui/material";
+import Snackbar from '@mui/material/Snackbar';
 import { Link } from "react-router-dom";
 import Web3 from "web3";
 import { useTheme } from "@mui/material/styles";
@@ -34,6 +35,8 @@ class Header extends React.Component {
     this.state = {
       account: "",
       position: "",
+      snackbarOpen: false,
+      snackbarMsg: "Please install a Web3 wallet extension like MetaMask to continue.",
     };
   }
 
@@ -46,8 +49,21 @@ class Header extends React.Component {
     this.props.dispatch({ type: "SET_THEME", payload: "light" });
     setToLS("vegan-theme", "light");
   };
+  
+  snackbarCloseHandle = (event, reason) => {
+    this.setState({
+      snackbarOpen: false,
+    });
+  };
 
   async walletConnect() {
+    if (typeof window.ethereum === 'undefined') {
+      this.setState({
+        snackbarOpen: true,
+      })
+      return;
+    }
+
     try {
       await window.ethereum.request({
         method: "wallet_switchEthereumChain",
@@ -230,6 +246,14 @@ class Header extends React.Component {
             >
               Connect Wallet
             </Button>
+            <Snackbar
+              anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+              open={this.state.snackbarOpen}
+              autoHideDuration={5000}
+              onClose={this.snackbarCloseHandle}
+              message={this.state.snackbarMsg}
+              key={'topright'}
+            />
             <Stack flexDirection="row" alignItems="center" gap={4}>
               <Stack
                 flexDirection="row"
