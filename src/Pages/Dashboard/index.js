@@ -108,6 +108,16 @@ class Dashboard extends React.Component {
         ),
         loading: false,
       });
+    } else {
+      this.setState({
+        totalSupply: 0,
+        holders: [],
+        holderTable: [],
+        realHolderTable: [],
+        owner: "",
+        admin: "",
+        loading: false,
+      });
     }
   }
 

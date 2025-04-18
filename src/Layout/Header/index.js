@@ -124,11 +124,12 @@ class Header extends React.Component {
         accounts = web3.utils.toChecksumAddress(accounts + "");
       } catch (err) {}
 
+      this.props.dispatch({ type: "SET_ACCOUNT", payload: accounts[0] });
       this.setState({
-        account: accounts,
+        account: accounts?.[0] || "",
       });
-      this.checkDashBoard(this.state.account);
-      this.checkElectionStatus();
+      // this.checkDashBoard(this.state.account);
+      // this.checkElectionStatus();
     });
 
     ethereum.on("chainChanged", async (chainId) => {
@@ -137,6 +138,13 @@ class Header extends React.Component {
         params: [{ chainId: web3.utils.toHex(1666600000) }],
       });
     });
+
+    ethereum.on("disconnect", (error) => {
+      this.props.dispatch({ type: "SET_ACCOUNT", payload: "" });
+      this.setState({
+        account: "",
+      });
+    })
 
     // this.checkDashBoard(this.state.linkedAccount)
   }
@@ -236,7 +244,7 @@ class Header extends React.Component {
             <Button
               variant="contained"
               color="success"
-              disabled={this.state.account ? true : false}
+              disabled={!!this.state.account}
               sx={{
                 fontWeight: 700,
                 display: { xs: "none", sm: "block" },
