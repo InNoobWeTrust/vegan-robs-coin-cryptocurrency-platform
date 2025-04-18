@@ -27,6 +27,7 @@ You’ll work on fixing some critical issues on the Web3 integration and smart c
    Obviously, we uploaded an image together, but cannot find it.  
    I am not sure if this error comes from smart contract or web3 integration.  
    If it comes from smart contracts, the problem would be much more complex than expected..  
+   => The source image turn out to be [vrdao's pinata cloud](https://vrdao.mypinata.cloud/ipfs/QmPyj3DrYwou8ruEJDYYRY17R4e7FEMaFuS1q7e74sP1tg). The actual gateway is not accessible, seem like the storage is deleted, quick solution is to modify the image link in election data.
 3. When you go to the dashboard, you will be able to see the DAO information such as owner's address, members' address there.  
    You can see this information only when you connect the wallet, that works well. But the problem is when you disconnect the wallet. I want to hide DAO information when you disconnect wallet but it's still displaying even you disconnect wallet,   
    Our goal here is to hide them when you disconnect the wallet without full page refresh.
